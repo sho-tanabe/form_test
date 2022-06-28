@@ -151,7 +151,7 @@
         
         
                  //プルダウンメニューの配列(動的に指定するためのリスト)
-
+/**
         var list = [
             {val:"1", txt:"P1"},
             {val:"2", txt:"P2"},
@@ -160,7 +160,7 @@
             {val:"5", txt:"P5"},
         ];
           console.log(list);        
- 
+*/ 
         
         function readFirst(){
           //画面読み込みと同時に配列表示する
@@ -179,12 +179,12 @@
 
             let text22 = [];
           for (let m = 0; m < arr2.length; m++) {
-              var obj = {"val":m,"txt":m.toString()};
+              var obj = {"val":m.toString(),"txt":m.toString()};
                 text22.push(obj);
             }          
           console.log(text22);  
             
-          //var list = text2;
+          var list = text2;
             
             
             
