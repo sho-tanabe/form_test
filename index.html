@@ -14,6 +14,7 @@
         <!--test_start-->
         <select id="PullDownList"></select>
         <ul id="txt" class="uk-list uk-list-square"></ul>
+        <select id="txt2"></select>
         
         <div class="uk-light uk-background-secondary uk-padding">
             <ul id="txt" class="uk-list uk-list-square"></ul>
@@ -103,18 +104,30 @@
         
         
         function change() {
-
-    let arr = csvToArray("test.csv");
-    // 配列をliタグにしてフロントに表示
-    let text = [];
-    for (let i = 0; i < arr.length; i++) {
-      text.push('<li>' + arr[i] + '</li>');
-    }
-    // innerHTMLを使用して表示
-    let txt = document.getElementById("txt");
-    txt.innerHTML = text.join('');
-
-  };
+            let arr = csvToArray("test.csv");
+            // 配列をliタグにしてフロントに表示
+            let text = [];
+            for (let i = 0; i < arr.length; i++) {
+                text.push('<li>' + arr[i] + '</li>');
+            }
+            // innerHTMLを使用して表示
+            let txt = document.getElementById("txt");
+            txt.innerHTML = text.join('');
+        };
+        
+        
+        function change２() {
+            let arr2 = csvToArray("test.csv");
+            // 配列をliタグにしてフロントに表示
+            let text2 = [];
+            for (let k = 0; k < arr2.length; k++) {
+                text2.push('<option>' + arr2[k] + '</option>');
+            }
+            // innerHTMLを使用して表示
+            let txt2 = document.getElementById("txt2");
+            txt2.innerHTML = text2.join('');
+        };
+        
 
   // CSVファイル読み込み
   function csvToArray(filename) {
