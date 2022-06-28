@@ -175,8 +175,10 @@
         function readFirst(){
           //画面読み込みと同時に配列表示する
           change();
-          
-          let arr2 = csvToArray("test.csv");
+            var now = new date();
+            console.log(now);
+            
+          let arr2 = csvToArray("test.csv?1234");
           console.log(arr2);
           
             // 配列をliタグにしてフロントに表示
