@@ -11,7 +11,17 @@
 
     <form class="w-75 mx-auto">
         
+        <!--test_start-->
         <select id="PullDownList"></select>
+        
+        <div class="uk-light uk-background-secondary uk-padding">
+            <ul id="txt" class="uk-list uk-list-square"></ul>
+            <p uk-margin>
+                <button class="uk-button uk-button-danger" onclick="change()">配列を表示</button>
+            </p>
+        </div>
+        <!--test_end-->       
+        
         
         <p class="mt-3">氏名(全角ひらがな)</p>
         <div>
@@ -85,6 +95,53 @@
             });
         });
         
+        
+        
+
+        
+        
+        
+        function change() {
+
+    let arr = csvToArray("test.csv");
+    // 配列をliタグにしてフロントに表示
+    let text = [];
+    for (let i = 0; i < arr.length; i++) {
+      text.push('<li>' + arr[i] + '</li>');
+    }
+    // innerHTMLを使用して表示
+    let txt = document.getElementById("txt");
+    txt.innerHTML = text.join('');
+
+  };
+
+  // CSVファイル読み込み
+  function csvToArray(filename) {
+
+    // CSVファイルを文字列として取得
+    let srt = new XMLHttpRequest();
+    srt.open("GET", filename, false);
+    try {
+      srt.send(null);
+    } catch (err) {
+      console.log(err)
+    }
+
+    // 配列を用意
+    let csletr = [];
+
+    // 改行ごとに配列化
+    let lines = srt.responseText.split("\n");
+
+    // 1行ごとに処理
+    for (let i = 0; i < lines.length; ++i) {
+      let cells = lines[i].split(",");
+      if (cells.length != 1) {
+        csletr.push(cells);
+      }
+    }
+    return csletr;
+  }
         
         
         
