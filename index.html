@@ -116,17 +116,7 @@
         };
         
         
-        function change２() {
-            let arr2 = csvToArray("test.csv");
-            // 配列をliタグにしてフロントに表示
-            let text2 = [];
-            for (let k = 0; k < arr2.length; k++) {
-                text2.push('<option>' + arr2[k] + '</option>');
-            }
-            // innerHTMLを使用して表示
-            let txt2 = document.getElementById("txt2");
-            txt2.innerHTML = text2.join('');
-        };
+
         
 
   // CSVファイル読み込み
@@ -161,17 +151,33 @@
         
         
                  //プルダウンメニューの配列(動的に指定するためのリスト)
- var list = [
-   {val:"1", txt:"P1"},
-   {val:"2", txt:"P2"},
-   {val:"3", txt:"P3"},
-   {val:"4", txt:"P4"},
-   {val:"5", txt:"P5"},
- ];
+
+        //var list = [
+        //    {val:"1", txt:"P1"},
+        //    {val:"2", txt:"P2"},
+        //    {val:"3", txt:"P3"},
+        //    {val:"4", txt:"P4"},
+        //    {val:"5", txt:"P5"},
+        //];
         
  
         
         function readFirst(){
+          //画面読み込みと同時に配列表示する
+          change();
+          
+          let arr2 = csvToArray("test.csv");
+          // 配列をliタグにしてフロントに表示
+          let text2 = [];
+          for (let k = 0; k < arr2.length; k++) {
+                text2.push('[{' + arr2[k] + '}]');
+            }
+          var list = text2;
+            
+            
+            
+            
+            
           //プルダウンリストをループ処理で値を取り出してセレクトボックスにセットする
           for(var i=0;i<list.length;i++){
             let opt = document.createElement("option");
@@ -180,8 +186,7 @@
             document.getElementById("PullDownList").appendChild(opt);
           }
           
-          //画面読み込みと同時に配列表示する
-          change();
+
         };
         
         
