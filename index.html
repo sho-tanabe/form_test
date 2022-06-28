@@ -1,0 +1,182 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEB問診票</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+</head>
+<body onload="readFirst()">
+
+    <form class="w-75 mx-auto">
+        
+        <!--test_start-->
+        <select id="PullDownList"></select>
+        
+        <div class="uk-light uk-background-secondary uk-padding">
+            <ul id="txt" class="uk-list uk-list-square"></ul>
+            <p uk-margin>
+                <button class="uk-button uk-button-danger" onclick="change()">配列を表示</button>
+            </p>
+        </div>
+        <!--test_end-->       
+        
+        
+        <p class="mt-3">氏名(全角ひらがな)</p>
+        <div>
+            <input class="form-control w-100 mt-1" name="name" placeholder="" required>
+        </div>
+        <p class="mt-3">診察券番号(半角数字 不明の場合は"0")</p>
+        <div>
+            <input class="form-control w-100 mt-1" name="bangou" required>
+        </div>
+        <p class="mt-3">一番お困りのことは?</p>
+        <div>
+            <input class="form-control w-100 mt-1" name="shushoujou" required>
+        </div>
+        <p class="mt-3">いつからどのような様子ですか?</p>
+        <div>
+            <input class="form-control w-100 mt-1" name="keika" required>
+        </div>
+        <p class="mt-3">37.5度以上の発熱の有無("はい" か "いいえ")</p>
+        <div>
+            <input class="form-control w-100 mt-1" name="hatunetu" required>
+        </div>
+        <input type="submit" class="mt-4 btn btn-primary" value="送信">
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            const liffId = "1657130381-LVPYz30z";
+            initializeLiff(liffId);
+        })
+
+        function initializeLiff(liffId) {
+            liff.init({
+                liffId: liffId
+            }).then(() => {
+                initializeApp();
+            }).catch((err) => {
+                console.log('LIFF Initialization failed ', err);
+            });
+        }
+
+        function sendText(text) {
+            liff.sendMessages([{
+                'type': 'text',
+                'text': text
+            }]).then(function () {
+                liff.closeWindow();
+            }).catch(function (error) {
+                window.alert('Failed to send message ' + error);
+            });
+        }
+
+        const params = (new URL(document.location)).searchParams;
+        const key = params.get('key');
+
+        $(function () {
+            $('form').submit(function () {
+                const name    = $('input[name="name"]').val();
+                const bangou = $('input[name="bangou"]').val();
+                const shushoujou  = $('input[name="shushoujou"]').val();
+                const keika  = $('input[name="keika"]').val();
+                const hatunetu = $('input[name="hatunetu"]').val();
+                const msg = `${name}\n${bangou}\n${shushoujou}\n${keika}\n${hatunetu}`;
+                sendText(msg);
+                return false;
+            });
+        });
+        
+        
+        
+
+        
+        
+        
+        function change() {
+
+    let arr = csvToArray("test.csv");
+    // 配列をliタグにしてフロントに表示
+    let text = [];
+    for (let i = 0; i < arr.length; i++) {
+      text.push('<li>' + arr[i] + '</li>');
+    }
+    // innerHTMLを使用して表示
+    let txt = document.getElementById("txt");
+    txt.innerHTML = text.join('');
+
+  };
+
+  // CSVファイル読み込み
+  function csvToArray(filename) {
+
+    // CSVファイルを文字列として取得
+    let srt = new XMLHttpRequest();
+    srt.open("GET", filename, false);
+    try {
+      srt.send(null);
+    } catch (err) {
+      console.log(err)
+    }
+
+    // 配列を用意
+    let csletr = [];
+
+    // 改行ごとに配列化
+    let lines = srt.responseText.split("\n");
+
+    // 1行ごとに処理
+    for (let i = 0; i < lines.length; ++i) {
+      let cells = lines[i].split(",");
+      if (cells.length != 1) {
+        csletr.push(cells);
+      }
+    }
+    return csletr;
+  }
+        
+        
+        
+        
+                 //プルダウンメニューの配列(動的に指定するためのリスト)
+ var list = [
+   {val:"1", txt:"P1"},
+   {val:"2", txt:"P2"},
+   {val:"3", txt:"P3"},
+   {val:"4", txt:"P4"},
+   {val:"5", txt:"P5"},
+ ];
+        
+ 
+        
+        function readFirst(){
+          //プルダウンリストをループ処理で値を取り出してセレクトボックスにセットする
+          for(var i=0;i<list.length;i++){
+            let opt = document.createElement("option");
+            opt.value = list[i].val;  //value値
+            opt.text = list[i].txt;   //テキスト値
+            document.getElementById("PullDownList").appendChild(opt);
+          }
+          
+          //画面読み込みと同時に配列表示する
+          change();
+        };
+        
+        
+       
+        
+
+        
+
+    </script>
+
+</body>
+</html>
