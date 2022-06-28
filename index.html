@@ -167,13 +167,22 @@
           change();
           
           let arr2 = csvToArray("test.csv");
-          // 配列をliタグにしてフロントに表示
+          console.log(arr2);
+          
+            // 配列をliタグにしてフロントに表示
           let text2 = [];
           for (let k = 0; k < arr2.length; k++) {
                 text2.push(arr2[k]);
-            }
-          
+            }          
           console.log(text2);
+            
+
+            let text22 = [];
+          for (let m = 0; m < arr2.length; m++) {
+              var obj = {"val":m,"txt":m.toString()};
+                text22.push(obj);
+            }          
+          console.log(text22);  
             
           //var list = text2;
             
